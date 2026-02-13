@@ -26,7 +26,7 @@ export default function Login() {
           placeholder="SENHA"
         />
 
-        <Pressable>
+        <Pressable onPress={()=>navigate.navigate('Cadastro')}>
             <Text className="text-orange-500 text-lg font-semibold mb-7">
                 Não tem uma conta? Cadastre-se
             </Text>
