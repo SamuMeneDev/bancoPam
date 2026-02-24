@@ -27,7 +27,26 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/font/NotoSans/static/NotoSans-Regular.ttf"],
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "Noto Sans",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/font/NotoSans/static/NotoSans-Regular.ttf",
+                    "weight": 500
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
     ]
   }
 }
