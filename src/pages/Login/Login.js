@@ -2,6 +2,8 @@ import { View, Text, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Checkbox } from 'expo-checkbox';
 import { useState } from "react";
+import InputEmail from "../../components/InputEmail";
+import InputSenha from "../../components/InputSenha";
 
 export default function Login() {
   const navigate = useNavigation();
@@ -24,35 +26,8 @@ export default function Login() {
         </Text>
       </View>
       <View style={{ flex: 0.18 }} className="justify-center p-3 gap-7">
-        <View className="gap-2 flex-row border items-center rounded-lg border-stone-300 p-1 bg-stone-200">
-          <Image
-            style={{ height: 30, width: 30 }}
-            tintColor={"#12837E"}
-            source={require("bootstrap-icons/icons/envelope.svg")}
-          />
-          <TextInput
-            placeholder="E-Mail"
-            className="text-2xl text-stone-600 font-semibold w-full outline-none"
-          />
-        </View>
-        <View className="gap-2 flex-row border items-center rounded-lg border-stone-300 p-1 bg-stone-200">
-          <Image
-            style={{ height: 30, width: 30 }}
-            tintColor={"#12837E"}
-            source={require("bootstrap-icons/icons/lock.svg")}
-          />
-          <TextInput
-            placeholder="Senha"
-            className="text-2xl text-stone-600 font-semibold w-full outline-none"
-          />
-          <Pressable>
-            <Image
-              style={{height:30, width:30}}
-              tintColor={"#12837E"}
-              source={require("bootstrap-icons/icons/eye-fill.svg")}
-            />
-          </Pressable>
-        </View>
+        <InputEmail placeholder="Email" />
+        <InputSenha placeholder="Senha" />
       </View>
       <View  style={{ flex: 0.04 }} className="flex-row gap-2 p-3 ml-3 items-center">
         <Checkbox value={lembreMim} onValueChange={setlembreMim} />
