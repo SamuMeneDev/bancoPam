@@ -12,7 +12,9 @@ export default function InputSenha({ placeholder, onChangeText, value}) {
           />
           <TextInput
             placeholder={placeholder}
-            className="text-2xl text-stone-600 font-semibold w-full outline-none"
+            keyboardType="default"
+            textContentType="newPassword"
+            className="text-xl text-stone-600 font-semibold w-full outline-none"
             onChangeText={onChangeText}
             value={value}
             secureTextEntry={!mostrarSenha}

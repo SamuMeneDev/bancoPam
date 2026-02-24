@@ -1,22 +1,22 @@
 import { View, Text, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Checkbox } from 'expo-checkbox';
+import { Checkbox } from "expo-checkbox";
 import { useState } from "react";
-import InputEmail from "../../components/InputEmail";
 import InputSenha from "../../components/InputSenha";
+import InputIcon from "../../components/InputIcon";
 
 export default function Login() {
   const navigate = useNavigation();
   const [lembreMim, setlembreMim] = useState(false);
   return (
-    <View style={{ flex: 1, flexDirection: "column" }}>
+    <View style={{ flex: 1 }}>
       <View
         style={{ flex: 0.25 }}
         className="rounded-b-3xl bg-emerald-500 items-center p-3 justify-between"
       >
         <Image
           resizeMode="contain"
-          style={{height: '50%'}}
+          style={{ height: "50%" }}
           tintColor={"#ffffff"}
           source={require("../../../assets/img/btg-logo.svg")}
         />
@@ -26,21 +26,34 @@ export default function Login() {
         </Text>
       </View>
       <View style={{ flex: 0.18 }} className="justify-center p-3 gap-7">
-        <InputEmail placeholder="Email" />
+        <InputIcon icone={require("bootstrap-icons/icons/envelope.svg")}>
+          <TextInput
+            placeholder="E-Mail"
+            className="text-xl text-stone-600 font-semibold w-full outline-none"
+          />
+        </InputIcon>
         <InputSenha placeholder="Senha" />
       </View>
-      <View  style={{ flex: 0.04 }} className="flex-row gap-2 p-3 ml-3 items-center">
+      <View
+        style={{ flex: 0.04 }}
+        className="flex-row gap-2 p-3 ml-3 items-center"
+      >
         <Checkbox value={lembreMim} onValueChange={setlembreMim} />
         <Text className="text-2xl font-light">Lembre-se de Mim</Text>
       </View>
-      <View style={{flex:0.12}} className="items-center justify-center">
-        <Pressable onPress={()=>navigate.navigate("Home")} className="bg-teal-600 w-[50%] rounded-lg flex items-center p-2 border-2 border-teal-700">
+      <View style={{ flex: 0.12 }} className="items-center justify-center">
+        <Pressable
+          onPress={() => navigate.navigate("Home")}
+          className="bg-teal-600 w-[50%] rounded-lg flex items-center p-2 border-2 border-teal-700"
+        >
           <Text className="text-white font-bold text-2xl">Login</Text>
         </Pressable>
       </View>
-      <View style={{flex:0.12}} className="justify-center items-center">
-        <Pressable onPress={()=>navigate.navigate("Cadastro")}>
-          <Text className="text-xl font-light text-teal-600">Não possui uma conta? Cadastre-se</Text>
+      <View style={{ flex: 0.12 }} className="justify-center items-center">
+        <Pressable onPress={() => navigate.navigate("Cadastro")}>
+          <Text className="text-xl font-light text-teal-600">
+            Não possui uma conta? Cadastre-se
+          </Text>
         </Pressable>
       </View>
     </View>
