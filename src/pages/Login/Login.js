@@ -59,12 +59,12 @@ export default function Login() {
         <Text className="text-2xl font-light">Lembre-se de Mim</Text>
       </View>
       <View style={{flex:0.12}} className="items-center justify-center">
-        <Pressable className="bg-teal-600 w-[50%] rounded-lg flex items-center p-2 border-2 border-teal-700">
+        <Pressable onPress={()=>navigate.navigate("Home")} className="bg-teal-600 w-[50%] rounded-lg flex items-center p-2 border-2 border-teal-700">
           <Text className="text-white font-bold text-2xl">Login</Text>
         </Pressable>
       </View>
       <View style={{flex:0.12}} className="justify-center items-center">
-        <Pressable>
+        <Pressable onPress={()=>navigate.navigate("Cadastro")}>
           <Text className="text-xl font-light text-teal-600">Não possui uma conta? Cadastre-se</Text>
         </Pressable>
       </View>
