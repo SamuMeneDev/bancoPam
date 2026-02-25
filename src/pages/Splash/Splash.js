@@ -6,8 +6,13 @@ export default function Splash() {
     const navigate = useNavigation();
      async function isLogin() {
         const login = await AsyncStorage.getItem("@login");
+        const loginObj = JSON.parse(login);
         if(login!=null) {
-
+            if(loginObj.email != undefined && loginObj.senha != undefined) {
+                navigate.navigate("Home");
+            } else {
+                navigate.navigate("Login");
+            }
         } else {
             navigate.navigate("Login");
         }

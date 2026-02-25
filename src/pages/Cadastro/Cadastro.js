@@ -9,9 +9,47 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import InputIcon from "../../components/InputIcon";
 import InputSenha from "../../components/InputSenha";
+import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Cadastro() {
+
   const navigate = useNavigation();
+
+  const [nome, setNome] = useState();
+  const [email, setEmail] = useState();
+  const [senha, setSenha] = useState();
+  const [senhaConfirm, setSenhaConfirm] = useState();
+  const [cpf, setCpf] = useState();
+  const [dia, setDia] = useState();
+  const [mes, setMes] = useState();
+  const [ano, setAno] = useState();
+
+  async function salvarDados(dado) {
+    await AsyncStorage.setItem("@cadastro", JSON.stringify(dado));
+  }
+  
+  function criarConta() {
+    try {
+      const usuario = {
+        nome: nome,
+        email: email,
+        senha: senha,
+        cpf: cpf,
+        dataNasc: {
+          dia: dia,
+          mes: mes,
+          ano: ano
+        }
+      }
+      salvarDados(usuario);
+      // Tratamento de Exeções e erros
+      navigate.navigate("Login");
+    } catch(erro) {
+
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 0.2 }} className="items-center p-3 justify-between">
@@ -32,6 +70,8 @@ export default function Cadastro() {
               keyboardType="default"
               textContentType="name"
               placeholder="Nome Completo"
+              value={nome}
+              onChangeText={setNome}
               className="text-xl text-stone-600 font-semibold w-full outline-none"
             />
           </InputIcon>
@@ -39,15 +79,19 @@ export default function Cadastro() {
             <TextInput
               keyboardType="email-address"
               textContentType="emailAddress"
+              value={email}
+              onChangeText={setEmail}
               placeholder="E-Mail"
               className="text-xl text-stone-600 font-semibold w-full outline-none"
             />
           </InputIcon>
-          <InputSenha placeholder="Senha" />
-          <InputSenha placeholder="Confirme a Senha" />
+          <InputSenha value={senha} onChangeText={setSenha} placeholder="Senha" />
+          <InputSenha value={senhaConfirm} onChangeText={setSenhaConfirm} placeholder="Confirme a Senha" />
           <View className="border items-center rounded-lg border-stone-300 p-1 bg-stone-200">
             <TextInput
               placeholder="CPF"
+              value={cpf}
+              onChangeText={setCpf}
               keyboardType="numeric"
               inputMode="numeric"
               className="text-xl pl-3 text-stone-600 font-semibold w-full outline-none"
@@ -69,18 +113,24 @@ export default function Cadastro() {
             <TextInput
               keyboardType="number-pad"
               maxLength={2}
+              value={dia}
+              onChangeText={setDia}
               placeholder="DD"
               className="w-[20%] placeholder:text-stone-400 text-stone-700 text-center outline-none text-xl border items-center rounded-lg border-stone-300 p-1 bg-stone-200"
             />
             <TextInput
               keyboardType="number-pad"
               maxLength={2}
+              value={mes}
+              onChangeText={setMes}
               placeholder="MM"
               className="w-[20%] placeholder:text-stone-400 text-stone-700 text-center outline-none text-xl border items-center rounded-lg border-stone-300 p-1 bg-stone-200"
             />
             <TextInput
               keyboardType="number-pad"
               maxLength={4}
+              value={ano}
+              onChangeText={setAno}
               placeholder="AAAA"
               className="w-[25%] placeholder:text-stone-400 text-stone-700 text-center outline-none text-xl border items-center rounded-lg border-stone-300 p-1 bg-stone-200"
             />
@@ -88,7 +138,7 @@ export default function Cadastro() {
         </View>
         <View style={{ flex: 0.3 }} className="justify-end items-center gap-5">
           <Pressable
-            onPress={() => navigate.navigate("Home")}
+            onPress={()=>criarConta()}
             className="rounded-lg border-2 border-teal-800 items-center w-[60%] bg-teal-700 p-2 "
           >
             <Text className="text-xl text-white font-bold">Criar Conta</Text>
