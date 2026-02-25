@@ -8,6 +8,7 @@ import {
   TextInput,
   Switch,
 } from "react-native";
+import InputRange from "./InputRange";
 
 export default function ModalRegistro({ visible, setModalVisible }) {
   const [isDespesa, setDespesa] = useState(true);
@@ -44,7 +45,7 @@ export default function ModalRegistro({ visible, setModalVisible }) {
           </View>
           <View style={{flex:0.1}} className="flex-row items-center justify-center gap-2">
             <View className="flex-row items-center gap-3">
-              <Text className="text-teal-800 text-xs">
+              <Text className="text-teal-800 text-xl">
                 {isDespesa ? "Despesa" : "Receita"}
               </Text>
               <Switch
@@ -55,13 +56,13 @@ export default function ModalRegistro({ visible, setModalVisible }) {
               />
             </View>
             <View className="flex-row p-2 justify-center border border-stone-400 items-center rounded-md w-[40%]">
-              <Text className="text-stone-600 font-semibold flex-nowrap w-[80%]">
+              <Text className="text-stone-600 text-lg font-semibold flex-nowrap w-[80%]">
                 R$ {isDespesa ? "-" : "+"}
               </Text>
               <TextInput
                 inputMode="numeric"
                 keyboardType="numbers-and-punctuation"
-                className="outline-none w-full placeholder:text-stone-500 text-stone-600"
+                className="outline-none w-full text-lg placeholder:text-stone-500 text-stone-600"
                 placeholder="00.00"
               />
             </View>
@@ -77,12 +78,7 @@ export default function ModalRegistro({ visible, setModalVisible }) {
                 placeholder="DD"
                 className="w-[20%] placeholder:text-stone-400 text-stone-700 text-center outline-none text-xl border items-center rounded-lg border-stone-300 p-1 bg-stone-200"
               />
-              <TextInput
-                keyboardType="number-pad"
-                maxLength={2}
-                placeholder="MM"
-                className="w-[20%] placeholder:text-stone-400 text-stone-700 text-center outline-none text-xl border items-center rounded-lg border-stone-300 p-1 bg-stone-200"
-              />
+              <InputRange placeholder={"MM"} maxLength={2} />
               <TextInput
                 keyboardType="number-pad"
                 maxLength={4}
