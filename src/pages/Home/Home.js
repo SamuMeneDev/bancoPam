@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { View, Image, Pressable, Text, ScrollView } from "react-native";
+import ModalRegistro from "../../components/ModalRegistro";
 
 export default function Home() {
 
   const [mostrarSaldo, setMostrarSaldo] = useState(false);
   const [saldo,setSaldo] = useState(0);
+
+  const [modalRegistro, setModalRegistro] = useState(false);
 
   function criptoSaldo(valor) {
     const str = valor.toString();
@@ -16,11 +19,11 @@ export default function Home() {
   }
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 0.27 }} className="bg-cyan-700 p-3 justify-between">
+      <View style={{ flex: 0.33 }} className="bg-cyan-700 p-3 justify-between">
         <View className="flex-row justify-between items-center">
           <View className="rounded-full p-1 bg-stone-300">
             <Image
-              style={{ height: 40, width: 40 }}
+              style={{ height: 30, width: 30 }}
               tintColor={"#12837E"}
               source={require("bootstrap-icons/icons/person.svg")}
             />
@@ -29,14 +32,14 @@ export default function Home() {
             <Pressable>
               <Image
                 tintColor={"#ffffff"}
-                style={{ height: 40, width: 40 }}
+                style={{ height: 30, width: 30 }}
                 source={require("bootstrap-icons/icons/gear.svg")}
               />
             </Pressable>
             <Pressable>
               <Image
                 tintColor={"#ffffff"}
-                style={{ height: 40, width: 40 }}
+                style={{ height: 30, width: 30 }}
                 source={require("bootstrap-icons/icons/box-arrow-right.svg")}
               />
             </Pressable>
@@ -59,7 +62,7 @@ export default function Home() {
       </View>
       <View>
         <View className="flex-row bg-teal-800 p-3 justify-center">
-          <Pressable className="rounded-full bg-cyan-600 flex-row items-center p-2">
+          <Pressable onPress={()=>setModalRegistro(true)} className="rounded-full bg-cyan-600 flex-row items-center p-2">
             <Image style={{width:30, height:30}} tintColor={'#ffffff'} source={require('bootstrap-icons/icons/currency-dollar.svg')} />
             <Text className="text-2xl text-white font-normal">Registrar Movimentação</Text>
           </Pressable>
@@ -71,6 +74,7 @@ export default function Home() {
 
         </ScrollView>
       </View>
+      <ModalRegistro visible={modalRegistro} setModalVisible={setModalRegistro} />
     </View>
   );
 }
