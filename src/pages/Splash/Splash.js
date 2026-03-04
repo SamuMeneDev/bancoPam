@@ -2,14 +2,17 @@ import { useNavigation } from "@react-navigation/native"
 import { useEffect } from "react";
 import { View, Image, ActivityIndicator } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import UsuarioService from "../../service/UsuarioService";
 export default function Splash() {
+
+
     const navigate = useNavigation();
-     async function isLogin() {
-        const login = await AsyncStorage.getItem("@login");
-        const loginObj = JSON.parse(login);
-        if(login!=null) {
+    
+    async function isLogin() {
+        const loginObj = await UsuarioService.getLogged();
+        if(loginObj!=null) {
             if(loginObj.email != undefined && loginObj.senha != undefined) {
-                navigate.navigate("Home");
+                navigate.navigate("Home", loginObj);
             } else {
                 navigate.navigate("Login");
             }
@@ -19,6 +22,7 @@ export default function Splash() {
      }
     useEffect(()=>{
         setTimeout(()=>{
+            UsuarioService.init();
             isLogin();
         }, 2000)
     }, [])

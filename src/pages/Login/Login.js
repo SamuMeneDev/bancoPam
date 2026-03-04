@@ -3,8 +3,10 @@ import { useNavigation } from "@react-navigation/native";
 import { Checkbox } from "expo-checkbox";
 import { useState } from "react";
 import InputSenha from "../../components/InputSenha";
+import Feather from '@expo/vector-icons/Feather';
 import InputIcon from "../../components/InputIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import UsuarioService from "../../service/UsuarioService";
 
 export default function Login() {
   const navigate = useNavigation();
@@ -14,12 +16,21 @@ export default function Login() {
   const [loginFail, setLoginFail] = useState(false);
   
   async function buscaDados() {
-    const busca = await AsyncStorage.getItem("@cadastro");
-    const buscaObj = JSON.parse(busca);
+    const busca = await UsuarioService.listUsers();
+    let buscaObj = null;
+
+    for(let i=0; i<busca.length; i++) {
+      if(busca[i].email == email && busca[i].senha == senha) {
+        buscaObj = busca[i];
+      }
+    }
+
     try {
       if(buscaObj.email == email && buscaObj.senha == senha) {
-        await AsyncStorage.setItem("@login", JSON.stringify({email:email, senha:senha}));
-        navigate.navigate("Home");
+        await UsuarioService.saveCurrentUsuario(buscaObj);
+        navigate.navigate("Home", buscaObj);
+      } else {
+        throw new Error("Erro ao cadastrar");
       }
     } catch(erro) {
       setLoginFail(true);
@@ -54,7 +65,8 @@ export default function Login() {
       <View style={{ flex: 0.25 }} className="justify-center p-3 gap-7">
         <View>
           {loginFail?<Text className="text-red-800 font-semibold text-sm">* Email ou senha inválidos</Text>:<></>}
-          <InputIcon icone={require("bootstrap-icons/icons/envelope.svg")}>
+          <InputIcon>
+            <Feather name="mail" size={24} color="black" />
             <TextInput
               value={email}
               onChangeText={(e)=>setEmail(e)}

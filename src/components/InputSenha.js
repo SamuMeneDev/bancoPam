@@ -1,15 +1,12 @@
 import { useState } from "react"
 import { View, Pressable, Image, TextInput } from "react-native"
+import Feather from '@expo/vector-icons/Feather';
 
 export default function InputSenha({ placeholder, onChangeText, value}) {
   const [mostrarSenha, setMostrarSenha] = useState(false);
   return (
         <View className="gap-2 flex-row border items-center rounded-lg border-stone-300 p-1 bg-stone-200">
-          <Image
-            style={{ height: 30, width: 30 }}
-            tintColor={"#12837E"}
-            source={require("bootstrap-icons/icons/lock.svg")}
-          />
+          <Feather name="lock" size={24} color="black" />
           <TextInput
             placeholder={placeholder}
             keyboardType="default"
@@ -20,11 +17,7 @@ export default function InputSenha({ placeholder, onChangeText, value}) {
             secureTextEntry={!mostrarSenha}
           />
           <Pressable onPress={()=>setMostrarSenha(!mostrarSenha)}>
-            <Image
-              style={{height:30, width:30}}
-              tintColor={"#12837E"}
-              source={mostrarSenha?require("bootstrap-icons/icons/eye-slash-fill.svg"):require("bootstrap-icons/icons/eye-fill.svg")}
-            />
+          <Feather name={mostrarSenha?'eye-off':'eye'} size={24} color="black" />
           </Pressable>
         </View>
     )

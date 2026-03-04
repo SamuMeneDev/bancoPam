@@ -1,11 +1,15 @@
-import { use, useState } from "react";
+import {  useEffect, useState } from "react";
 import { View, Image, Pressable, Text, ScrollView } from "react-native";
 import ModalRegistro from "../../components/ModalRegistro";
-
-export default function Home() {
+import Feather from '@expo/vector-icons/Feather';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+export default function Home({ route }) {
+  const navigate = useNavigation();
+  const usuario = route.params;
 
   const [mostrarSaldo, setMostrarSaldo] = useState(false);
-  const [saldo,setSaldo] = useState(0);
+  const [saldo,setSaldo] = useState(usuario.saldo);
 
   const [modalRegistro, setModalRegistro] = useState(false);
 
@@ -22,31 +26,19 @@ export default function Home() {
       <View style={{ flex: 0.33 }} className="bg-cyan-700 p-3 justify-between">
         <View className="flex-row justify-between items-center">
           <View className="rounded-full p-1 bg-stone-300">
-            <Image
-              style={{ height: 30, width: 30 }}
-              tintColor={"#12837E"}
-              source={require("bootstrap-icons/icons/person.svg")}
-            />
+          <Feather name="user" size={24} color="black" />
           </View>
           <View className="flex-row gap-10">
             <Pressable>
-              <Image
-                tintColor={"#ffffff"}
-                style={{ height: 30, width: 30 }}
-                source={require("bootstrap-icons/icons/gear.svg")}
-              />
+            <Feather name="settings" size={24} color="white" />
             </Pressable>
             <Pressable>
-              <Image
-                tintColor={"#ffffff"}
-                style={{ height: 30, width: 30 }}
-                source={require("bootstrap-icons/icons/box-arrow-right.svg")}
-              />
+            <Feather name="log-out" size={24} color="white" />
             </Pressable>
           </View>
         </View>
         <View style={{ flex: 0.4 }} className="justify-center">
-          <Text className="text-white font-light text-4xl">Olá, Fulano</Text>
+          <Text className="text-white font-light text-4xl">Olá, {usuario.nome}</Text>
         </View>
         <View style={{ flex: 0.5 }} className="justify-end">
           <View className="justify-center">
@@ -55,7 +47,7 @@ export default function Home() {
           <View className="flex-row items-center justify-between">
             <Text className="text-white font-semibold text-3xl">R$ {mostrarSaldo?saldo.toFixed(2):criptoSaldo(saldo)}</Text>
             <Pressable onPress={()=>setMostrarSaldo(!mostrarSaldo)}>
-                <Image style={{height:25, width:25}} tintColor={"#ffffff"} source={mostrarSaldo?require('bootstrap-icons/icons/eye-slash.svg'):require('bootstrap-icons/icons/eye.svg')} />
+            <Feather name={mostrarSaldo?'eye-off':'eye'} size={24} color="white" />
             </Pressable>
           </View>
         </View>
@@ -63,7 +55,7 @@ export default function Home() {
       <View>
         <View className="flex-row bg-teal-800 p-3 justify-center">
           <Pressable onPress={()=>setModalRegistro(true)} className="rounded-full bg-cyan-600 flex-row items-center p-2">
-            <Image style={{width:30, height:30}} tintColor={'#ffffff'} source={require('bootstrap-icons/icons/currency-dollar.svg')} />
+          <Feather name="dollar-sign" size={24} color="white" />
             <Text className="text-2xl text-white font-normal">Registrar Movimentação</Text>
           </Pressable>
         </View>
@@ -74,7 +66,7 @@ export default function Home() {
 
         </ScrollView>
       </View>
-      <ModalRegistro visible={modalRegistro} setModalVisible={setModalRegistro} />
+      <ModalRegistro usuario={usuario} visible={modalRegistro} setModalVisible={setModalRegistro} />
     </View>
   );
 }

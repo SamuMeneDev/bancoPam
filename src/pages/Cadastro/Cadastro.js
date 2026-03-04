@@ -8,9 +8,11 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import InputIcon from "../../components/InputIcon";
+import Feather from '@expo/vector-icons/Feather';
 import InputSenha from "../../components/InputSenha";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import UsuarioService from "../../service/UsuarioService";
 
 export default function Cadastro() {
 
@@ -24,10 +26,6 @@ export default function Cadastro() {
   const [dia, setDia] = useState();
   const [mes, setMes] = useState();
   const [ano, setAno] = useState();
-
-  async function salvarDados(dado) {
-    await AsyncStorage.setItem("@cadastro", JSON.stringify(dado));
-  }
   
   function criarConta() {
     try {
@@ -36,17 +34,18 @@ export default function Cadastro() {
         email: email,
         senha: senha,
         cpf: cpf,
+        saldo: 0,
+        historico: [],
         dataNasc: {
           dia: dia,
           mes: mes,
           ano: ano
         }
       }
-      salvarDados(usuario);
-      // Tratamento de Exeções e erros
+      UsuarioService.saveUsuario(usuario);
       navigate.navigate("Login");
     } catch(erro) {
-
+      console.log(erro);
     }
   }
 
@@ -65,7 +64,8 @@ export default function Cadastro() {
       </View>
       <ScrollView style={{ flex: 0.8 }} className="p-1">
         <View style={{ flex: 0.55 }} className="p-3 gap-3">
-          <InputIcon icone={require("bootstrap-icons/icons/person.svg")}>
+          <InputIcon>
+          <Feather name="user" size={24} color="black" />
             <TextInput
               keyboardType="default"
               textContentType="name"
@@ -75,7 +75,8 @@ export default function Cadastro() {
               className="text-xl text-stone-600 font-semibold w-full outline-none"
             />
           </InputIcon>
-          <InputIcon icone={require("bootstrap-icons/icons/envelope.svg")}>
+          <InputIcon>
+          <Feather name="mail" size={24} color="black" />
             <TextInput
               keyboardType="email-address"
               textContentType="emailAddress"
@@ -87,7 +88,8 @@ export default function Cadastro() {
           </InputIcon>
           <InputSenha value={senha} onChangeText={setSenha} placeholder="Senha" />
           <InputSenha value={senhaConfirm} onChangeText={setSenhaConfirm} placeholder="Confirme a Senha" />
-          <View className="border items-center rounded-lg border-stone-300 p-1 bg-stone-200">
+          <InputIcon>
+          <Feather name="key" size={24} color="black" />
             <TextInput
               placeholder="CPF"
               value={cpf}
@@ -96,15 +98,11 @@ export default function Cadastro() {
               inputMode="numeric"
               className="text-xl pl-3 text-stone-600 font-semibold w-full outline-none"
             />
-          </View>
+          </InputIcon>
         </View>
         <View style={{ flex: 0.15 }} className="p-3 gap-5 justify-between">
           <View className="flex-row items-center gap-2 pl-5">
-            <Image
-              style={{ height: 30, width: 30 }}
-              tintColor={"#00598a"}
-              source={require("bootstrap-icons/icons/calendar.svg")}
-            />
+          <Feather name="calendar" size={24} color="black" />
             <Text className="font-semibold text-xl text-sky-800">
               Data de Nascimento
             </Text>
