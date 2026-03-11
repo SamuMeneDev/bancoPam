@@ -1,5 +1,5 @@
 import {  useEffect, useState } from "react";
-import { View, Image, Pressable, Text, ScrollView } from "react-native";
+import { View, Image, Pressable, Text, ScrollView, FlatList } from "react-native";
 import ModalRegistro from "../../components/ModalRegistro";
 import Feather from '@expo/vector-icons/Feather';
 
@@ -67,7 +67,13 @@ export default function Home({ route }) {
       <View style={{flex:0.8}} className="p-3">
         <Text className="text-teal-800 font-light text-4xl">Atividades</Text>
         <ScrollView>
-
+          <FlatList
+          data={usuario.historico}
+          keyExtractor={(item, index)=>index.toString()}
+          renderItem={({item})=>(
+            <View className="border border-stone-300 p-1 mb-2 rounded-lg"><Text>{item.titulo}</Text></View>
+          )}
+          />
         </ScrollView>
       </View>
       <ModalRegistro usuario={usuario} setUsuario={setUsuario} visible={modalRegistro} setModalVisible={setModalRegistro} />
