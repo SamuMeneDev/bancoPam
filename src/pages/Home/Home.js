@@ -2,16 +2,20 @@ import {  useEffect, useState } from "react";
 import { View, Image, Pressable, Text, ScrollView } from "react-native";
 import ModalRegistro from "../../components/ModalRegistro";
 import Feather from '@expo/vector-icons/Feather';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { useNavigation } from "@react-navigation/native";
 export default function Home({ route }) {
   const navigate = useNavigation();
-  const usuario = route.params;
+  const [usuario, setUsuario] = useState(route.params);
 
   const [mostrarSaldo, setMostrarSaldo] = useState(false);
   const [saldo,setSaldo] = useState(usuario.saldo);
 
   const [modalRegistro, setModalRegistro] = useState(false);
+
+  useEffect(()=>{
+    setSaldo(usuario.saldo);
+  }, [usuario])
 
   function criptoSaldo(valor) {
     const str = valor.toString();
@@ -66,7 +70,7 @@ export default function Home({ route }) {
 
         </ScrollView>
       </View>
-      <ModalRegistro usuario={usuario} visible={modalRegistro} setModalVisible={setModalRegistro} />
+      <ModalRegistro usuario={usuario} setUsuario={setUsuario} visible={modalRegistro} setModalVisible={setModalRegistro} />
     </View>
   );
 }

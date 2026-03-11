@@ -18,14 +18,14 @@ export default function Cadastro() {
 
   const navigate = useNavigation();
 
-  const [nome, setNome] = useState();
-  const [email, setEmail] = useState();
-  const [senha, setSenha] = useState();
-  const [senhaConfirm, setSenhaConfirm] = useState();
-  const [cpf, setCpf] = useState();
-  const [dia, setDia] = useState();
-  const [mes, setMes] = useState();
-  const [ano, setAno] = useState();
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [senhaConfirm, setSenhaConfirm] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [dia, setDia] = useState("");
+  const [mes, setMes] = useState("");
+  const [ano, setAno] = useState("");
   
   function criarConta() {
     try {

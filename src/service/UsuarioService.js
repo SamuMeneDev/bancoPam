@@ -27,11 +27,25 @@ class UsuarioService {
         const data = await AsyncStorage.getItem('@login');
         return JSON.parse(data);
     }
-    static async saveDespesa(tarefa, email) {
-        const usuario = await UsuarioService.getUsuario(email);
-        usuario.historico.push(tarefa);
+    static async saveDespesa(registro) {
+        const usuario = await UsuarioService.getLogged();
+        usuario.historico.push(registro);
+        
+        let novoSaldo= 0;
+        usuario.historico.forEach(reg=>{novoSaldo+=reg.valor});
+        usuario.saldo = novoSaldo;
+
+
+        await UsuarioService.alterUsersList(usuario);
         await UsuarioService.saveCurrentUsuario(usuario);
     }
+    static async alterUsersList(usuario) {
+        const listaUsuarios = await UsuarioService.listUsers();
+        const novaListaUsuarios = listaUsuarios.map(us=>us.email == usuario.email?usuario:us);
+
+        await AsyncStorage.setItem('@cadastro', JSON.stringify(novaListaUsuarios));
+    }
+
     static async getUsuario(email) {
         const data = await UsuarioService.listUsers();
         let objAlvo = null;

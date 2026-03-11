@@ -10,13 +10,14 @@ import {
 import InputRange from "./InputRange";
 import Feather from '@expo/vector-icons/Feather';
 import UsuarioService from "../service/UsuarioService";
-export default function ModalRegistro({ visible, setModalVisible, usuario }) {
+import AsyncStorage from "@react-native-async-storage/async-storage";
+export default function ModalRegistro({ visible, setModalVisible, usuario, setUsuario }) {
   const [isDespesa, setDespesa] = useState(true);
   const [titulo, setTitulo] = useState("");
-  const [valor, setValor] = useState(0);
-  const [dia, setDia] =useState();
-  const[mes, setMes] = useState();
-  const[ano, setAno] = useState();
+  const [valor, setValor] = useState();
+  const [dia, setDia] =useState("");
+  const[mes, setMes] = useState("");
+  const[ano, setAno] = useState("");
 
    async function createDespesa() {
     const despesa = {
@@ -29,8 +30,9 @@ export default function ModalRegistro({ visible, setModalVisible, usuario }) {
       }
     }
     await UsuarioService.saveDespesa(despesa, usuario.email)
-    
-
+    const novoUsuario = await UsuarioService.getLogged();
+    setUsuario(novoUsuario);
+    setModalVisible(false);
   }
 
 
