@@ -4,6 +4,8 @@ import ModalRegistro from "../../components/ModalRegistro";
 import Feather from '@expo/vector-icons/Feather';
 
 import { useNavigation } from "@react-navigation/native";
+import Registro from "../../components/Registro";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Home({ route }) {
   const navigate = useNavigation();
   const [usuario, setUsuario] = useState(route.params);
@@ -17,13 +19,19 @@ export default function Home({ route }) {
     setSaldo(usuario.saldo);
   }, [usuario])
 
+  async function sair() {
+    await AsyncStorage.removeItem('@login');
+    navigate.navigate('Login');
+  }
+
   function criptoSaldo(valor) {
-    const str = valor.toString();
+    const str = valor.toFixed(2).toString();
+    console.log(str);
     let rotulo = "";
-    for(let i =0; i<str.length; i++) {
+    for(let i =0; i<Math.abs(str.length); i++) {
       rotulo = rotulo + "*";
     }
-    return rotulo+"***";
+    return rotulo;
   }
   return (
     <View style={{ flex: 1 }}>
@@ -36,7 +44,7 @@ export default function Home({ route }) {
             <Pressable>
             <Feather name="settings" size={24} color="white" />
             </Pressable>
-            <Pressable>
+            <Pressable onPress={()=>sair()}>
             <Feather name="log-out" size={24} color="white" />
             </Pressable>
           </View>
@@ -71,7 +79,7 @@ export default function Home({ route }) {
           data={usuario.historico}
           keyExtractor={(item, index)=>index.toString()}
           renderItem={({item})=>(
-            <View className="border border-stone-300 p-1 mb-2 rounded-lg"><Text>{item.titulo}</Text></View>
+            <Registro item={item} />
           )}
           />
         </ScrollView>

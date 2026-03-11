@@ -36,7 +36,7 @@ export default function Cadastro() {
         cpf: cpf,
         saldo: 0,
         historico: [],
-        dataNasc: {
+        dataNasc:{
           dia: dia,
           mes: mes,
           ano: ano
